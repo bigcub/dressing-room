@@ -10,7 +10,7 @@
 
 export const SPEC = {
   room: {
-    width: 180,   // MEASURED, X, left wall → right wall (back wall is this wall)
+    width: 181.8, // MEASURED, X, left wall → right wall along the back wall
     depth: 239,   // MEASURED, Y, back wall → front wall
     height: 270,  // MEASURED, Z, floor → main ceiling
   },
@@ -35,8 +35,8 @@ export const SPEC = {
   },
 
   socket: {
-    y: 34,         // MEASURED (approx), back wall → socket centre, along left wall
-    z: 45,         // ASSUMED, floor → socket centre (not surveyed)
+    y: 42.8,       // MEASURED, back wall → socket centre, along left wall
+    z: 49.4,       // MEASURED, floor → socket centre
     plateW: 14.6,  // ASSUMED, UK double socket faceplate 146 × 86 mm
     plateH: 8.6,
     plateT: 1.0,
@@ -52,7 +52,7 @@ export const SPEC = {
 
   radiator: {
     // On the front wall between the two doors. Position and size not yet surveyed.
-    centreX: 90, // ASSUMED, centred on the front wall
+    centreX: 90.9, // ASSUMED, centred on the front wall
     w: 100,      // ASSUMED, panel width
     h: 60,       // ASSUMED, panel height
     z: 15,       // ASSUMED, floor → bottom of panel
@@ -79,11 +79,12 @@ export function derive(spec = SPEC) {
   const diameter = pillar.circumference / Math.PI;
   const radius = diameter / 2;
 
-  // The two clearances plus the diameter overshoot the room width slightly.
-  // Split the discrepancy evenly: average the centre implied from each side.
+  // Positioned from the left wall: the left clearance is used exactly. The two clearances plus
+  // the diameter come to 1.25 cm more than the room width, so the right-hand gap in the model
+  // is that much smaller than taped (see widthCheck / discrepancy).
   const centreFromLeft = pillar.leftClearance + radius;
   const centreFromRight = room.width - pillar.rightClearance - radius;
-  const centreX = (centreFromLeft + centreFromRight) / 2;
+  const centreX = centreFromLeft;
   const widthCheck = pillar.leftClearance + diameter + pillar.rightClearance;
 
   const dropUnderside = room.height - ceilingDrop.drop;

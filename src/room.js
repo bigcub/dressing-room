@@ -165,7 +165,7 @@ export function buildRoom(spec = SPEC) {
   }
   root.getObjectByName('Front wall').add(radiator);
 
-  // Double light switch on the right wall face (X = 180), centred at Y = 129, Z = 117.
+  // Double light switch on the right wall face (X = room width), centred at Y = 129, Z = 117.
   const sw = spec.lightSwitch;
   const lightSwitch = new THREE.Group();
   lightSwitch.name = 'Light switch';
@@ -245,9 +245,9 @@ export function buildDimensions(spec = SPEC) {
   const lc = d.pillar.centreX - d.pillar.radius;
   const rc = W - (d.pillar.centreX + d.pillar.radius);
   g.add(dim([0, d.pillar.centreY, zp], [lc, d.pillar.centreY, zp],
-    `${fmt(lc)} (meas. ${spec.pillar.leftClearance})`));
+    `${fmt(lc)}`));
   g.add(dim([d.pillar.centreX + d.pillar.radius, d.pillar.centreY, zp], [W, d.pillar.centreY, zp],
-    `${fmt(rc)} (meas. ${spec.pillar.rightClearance})`));
+    `${fmt(rc)}`));
   g.add(dim([d.pillar.centreX, 0, 1], [d.pillar.centreX, d.pillar.centreY, 1],
     `${d.pillar.centreY} to ℄ pillar`, { tick: [4, 0, 0] }));
   const pl = label(`Ø${fmt(d.pillar.diameter)}`);
@@ -256,8 +256,8 @@ export function buildDimensions(spec = SPEC) {
 
   // Socket.
   left.add(dim([1, 0, spec.socket.z + 8], [1, spec.socket.y, spec.socket.z + 8], `${spec.socket.y} to socket`));
-  left.add(dim([1, spec.socket.y + 10, 0], [1, spec.socket.y + 10, spec.socket.z], `${spec.socket.z} (assumed)`,
-    { tick: [0, 4, 0], cls: 'assumed' }));
+  left.add(dim([1, spec.socket.y + 10, 0], [1, spec.socket.y + 10, spec.socket.z], `${spec.socket.z} to socket ℄`,
+    { tick: [0, 4, 0] }));
 
   // Doorways.
   left.add(dim([2, 0, 1], [2, d.leftOpening.y0, 1], `${d.leftOpening.y0} solid`, { tick: [0, 0, 4] }));

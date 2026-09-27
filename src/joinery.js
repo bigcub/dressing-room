@@ -463,13 +463,13 @@ const HUNG = { gown: { out: 16, half: 17, drop: 112 }, cap: { out: 18, half: 11,
 function hookBox(it) {
   const h = HUNG[it.holds ?? 'none'];
   const lo = it.z - 8 - h.drop;
-  const x = it.access === '+X' ? 0 : 180 - h.out;
+  const x = it.access === '+X' ? 0 : SPEC.room.width - h.out;
   return { mount: it.z, x, w: h.out, y: it.y - h.half, d: 2 * h.half, z: lo, h: it.z - lo };
 }
 
 function buildHook(it, rand) {
   const g = new THREE.Group();
-  const s = it.access === '+X' ? 1 : -1, wall = it.access === '+X' ? 0 : 180;
+  const s = it.access === '+X' ? 1 : -1, wall = it.access === '+X' ? 0 : SPEC.room.width;
   const X = (a, b) => [wall + s * a, wall + s * b].sort((p, q) => p - q);
   const y = it.y + (HUNG[it.holds ?? 'none'].half), z = it.mount; // centre line and shelf underside
   // J-hook: stem down from the shelf, out, then a short upturn.

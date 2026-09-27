@@ -291,7 +291,7 @@ const checks = document.getElementById('checks');
 const d = report.derived;
 const lines = [
   `Pillar Ø ${d.pillar.diameter.toFixed(2)} cm, centre X ${d.pillar.centreX.toFixed(2)}, Y ${d.pillar.centreY}`,
-  `Clearances + Ø = ${d.pillar.widthCheck.toFixed(2)} cm (${d.pillar.discrepancy >= 0 ? '+' : ''}${d.pillar.discrepancy.toFixed(2)} vs ${W}); split evenly`,
+  `Placed ${SPEC.pillar.leftClearance} cm from the left wall. Clearances + Ø = ${d.pillar.widthCheck.toFixed(2)} cm vs ${W} room width (${d.pillar.discrepancy >= 0 ? '+' : ''}${d.pillar.discrepancy.toFixed(2)})`,
   ...report.errors.map((e) => `✗ ${e}`),
 ];
 checks.innerHTML = lines.map((l) => `<li class="${l.startsWith('✗') ? 'bad' : ''}">${l}</li>`).join('');
