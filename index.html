@@ -34,7 +34,27 @@
     }
     .views button:hover { border-color: #b9b3a6; }
     .views button.active { background: var(--ink); color: #fff; border-color: var(--ink); }
-    label.t { display: flex; align-items: center; gap: 8px; margin: 4px 0; cursor: pointer; }
+    /* On/off toggles: real checkboxes, visually hidden, inside button-styled labels. */
+    .toggles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
+    .toggles label {
+      position: relative; font-size: 12px; padding: 6px 4px; cursor: pointer; user-select: none;
+      display: flex; align-items: center; justify-content: center; gap: 5px;
+      border: 1px solid var(--line); background: #fff; border-radius: 5px; color: var(--ink);
+    }
+    /* Tick box inside each toggle: empty when off, ticked when on. */
+    .toggles span::before {
+      content: ''; display: inline-block; flex: none; width: 11px; height: 11px; margin-right: 5px; vertical-align: -1px;
+      border: 1.5px solid #a39d91; border-radius: 3px; background: #fff; box-sizing: border-box;
+    }
+    .toggles label:has(input:checked) span::before {
+      border-color: #fff; background: #fff
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 6.2 5 8.6 9.5 3.6' fill='none' stroke='%2326241f' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+        center / 100% no-repeat;
+    }
+    .toggles label:hover { border-color: #b9b3a6; }
+    .toggles input { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; pointer-events: none; }
+    .toggles label:has(input:checked) { background: var(--ink); color: #fff; border-color: var(--ink); }
+    .toggles label:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 1px; }
     table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
     td { padding: 3px 0; border-bottom: 1px solid #ece9e2; vertical-align: top; }
     td:last-child { text-align: right; white-space: nowrap; padding-left: 8px; }
@@ -157,6 +177,14 @@
     </div>
     <p class="note">Drag to orbit (3D / Inside), right-drag to pan, scroll to zoom. The wall nearest the camera is cut away. Left, Right, Back and Front show that wall from inside the room.</p>
 
+    <h2>Show</h2>
+    <div class="toggles">
+      <label title="Dimension labels"><input type="checkbox" autocomplete="off" data-toggle="dims"><span>Dimensions</span></label>
+      <label title="10 cm floor grid"><input type="checkbox" autocomplete="off" data-toggle="grid"><span>Grid</span></label>
+      <label title="Cut away the walls nearest the camera"><input type="checkbox" autocomplete="off" data-toggle="cutaway" checked><span>Cutaway</span></label>
+      <label title="Ceiling and ceiling drop"><input type="checkbox" autocomplete="off" data-toggle="ceiling" checked><span>Ceiling</span></label>
+    </div>
+
     <h2>Fit-out</h2>
     <table class="fitouts" id="fitouts"></table>
     <div class="fitout-detail" id="fitout-detail"></div>
@@ -175,12 +203,6 @@
       <button data-bg="dark">Dark</button>
     </div>
     <p class="note">Auto goes dark behind light walls and light behind dark walls.</p>
-
-    <h2>Show</h2>
-    <label class="t"><input type="checkbox" data-toggle="dims" checked> Dimensions</label>
-    <label class="t"><input type="checkbox" data-toggle="grid"> 10 cm floor grid</label>
-    <label class="t"><input type="checkbox" data-toggle="cutaway" checked> Cut away near walls</label>
-    <label class="t"><input type="checkbox" data-toggle="ceiling" checked> Ceiling + drop</label>
 
     <h2>Positions from back wall (Y)</h2>
     <table>
