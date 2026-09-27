@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shelf Fixing Detail</title>
+  <style>
+    :root {
+      --bg: #f4f2ed; --panel: #fbfaf7; --ink: #26241f; --muted: #6f6a60; --line: #dcd8cf;
+      --accent: #2b5fa8; --warn: #b7791f;
+      font-family: ui-sans-serif, -apple-system, "Segoe UI", system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); }
+    body { display: grid; grid-template-columns: 360px 1fr; }
+    aside { background: var(--panel); border-right: 1px solid var(--line); padding: 18px; overflow-y: auto; font-size: 13px; line-height: 1.5; }
+    h1 { font-size: 16px; margin: 0 0 2px; }
+    .sub { color: var(--muted); margin: 0 0 14px; }
+    h2 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 18px 0 8px; font-weight: 600; }
+    a { color: var(--accent); }
+    .views { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px; }
+    .views button { font: inherit; font-size: 12px; padding: 6px 0; border: 1px solid var(--line); background: #fff; border-radius: 5px; cursor: pointer; color: var(--ink); }
+    .views button.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+    label.t { display: flex; align-items: center; gap: 8px; margin: 4px 0; cursor: pointer; }
+    ol.legend { list-style: none; padding: 0; margin: 0; counter-reset: n; }
+    ol.legend li { position: relative; padding: 0 0 10px 30px; }
+    ol.legend li::before {
+      counter-increment: n; content: counter(n); position: absolute; left: 0; top: 0;
+      width: 20px; height: 20px; border-radius: 50%; background: var(--accent); color: #fff;
+      font-size: 11px; font-weight: 700; display: grid; place-items: center;
+    }
+    ol.legend b { display: block; }
+    .warn { color: var(--warn); }
+    table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+    td { padding: 3px 0; border-bottom: 1px solid #ece9e2; vertical-align: top; }
+    td:last-child { text-align: right; padding-left: 8px; white-space: nowrap; }
+    main { position: relative; overflow: hidden; }
+    #viewport { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 40%, #fbfaf7 0%, #e6e2d9 60%, #d4cfc4 100%); }
+    #viewport canvas { display: block; }
+    .labels { position: absolute; top: 0; left: 0; pointer-events: none; }
+    .pin {
+      width: 20px; height: 20px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 11px;
+      font-weight: 700; display: grid; place-items: center; box-shadow: 0 0 0 2px #fff;
+    }
+    .hint { position: absolute; left: 12px; bottom: 12px; font-size: 11px; color: var(--muted); background: rgba(251,250,247,0.9); padding: 5px 8px; border-radius: 5px; border: 1px solid var(--line); }
+    @media (max-width: 760px) {
+      body { grid-template-columns: 1fr; grid-template-rows: 55vh auto; }
+      main { grid-row: 1; }
+      aside { grid-row: 2; border-right: 0; border-top: 1px solid var(--line); }
+    }
+  </style>
+  <script type="importmap">
+    { "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+    } }
+  </script>
+</head>
+<body>
+  <aside>
+    <h1>Shelf fixing detail</h1>
+    <p class="sub">Back-wall shelves at 212 and 242 cm, 38 cm deep, with the rail. <a href="index.html">← Room model</a></p>
+
+    <h2>View</h2>
+    <div class="views">
+      <button data-view="overview">Overview</button>
+      <button data-view="pillar">At the pillar</button>
+      <button data-view="left">Left wall end</button>
+      <button data-view="behind">Behind the boards</button>
+    </div>
+    <label class="t"><input type="checkbox" data-toggle="xray"> See through plasterboard</label>
+    <label class="t"><input type="checkbox" data-toggle="lift"> Lift shelves off</label>
+
+    <h2>How it goes together</h2>
+    <ol class="legend">
+      <li><b>Back wall: plasterboard on dabs over block</b>The board sits on adhesive dabs about 15 mm off the concrete block. Fixings have to cross that gap and bite into the block, not just the board.</li>
+      <li><b>Frame fixings into the block</b>10 × 100 mm frame fixings (or a fixing made for dot-and-dab), 5 per shelf at ~40 cm centres. Snug, don’t overtighten: that crushes the board into the gap. Where you can, land them on a dab (tap the wall: solid sounds duller).</li>
+      <li><b>Back cleat</b>44 × 21 mm planed timber, full 180 cm width. It runs continuously behind the pillar: the pillar stands 24 cm off the wall, so there’s room to drill and screw behind it.</li>
+      <li><b>Side cleats into the wall battens</b>Short 44 × 21 mm cleats on each side wall carry the shelf ends. 5 × 70 mm wood screws into the timber battens behind the plasterboard; find them with a stud finder. <span class="warn">Batten positions here are assumed (400 mm centres).</span></li>
+      <li><b>Hollow-wall anchor where there’s no batten</b>Heavy-duty metal spring-toggle anchors through the board. One per cleat alongside the batten screw is plenty; the back cleat does most of the work.</li>
+      <li><b>Shelf in two halves</b>25 mm board (oak or oak-faced ply to match the chest tops). The pillar runs floor to ceiling, so a one-piece shelf can’t go round it: each shelf is two boards meeting on the pillar centreline, each cut round it with a 3 mm gap. No load on the column, and no rubbing on its paint.</li>
+      <li><b>Pillar collar</b>Split hardwood collar, cork-lined, clamped round the column by bolts through its own two halves. It carries both board ends at the joint. <span class="warn">Nothing is drilled into the cast iron.</span> Glue is optional as a backup only: it grips the paint, not the iron.</li>
+      <li><b>Rail</b>End sockets screwed to the side walls (into a batten, or toggle anchors). At the pillar, a second collar with a socket on each side. Rail height (170–200 cm) is still to be decided, and the collar can go at any height.</li>
+      <li><b>Clearance</b>About 22 cm between the top shelf and the ceiling drop (267 cm): keep things up there under ~20 cm tall.</li>
+    </ol>
+
+    <h2>Parts for two shelves</h2>
+    <table>
+      <tr><td>Shelf boards, 25 mm, 38 cm deep (2 per shelf, one ~73 cm and one ~107 cm long)</td><td>4</td></tr>
+      <tr><td>Back cleat, 44 × 21 mm × 180 cm</td><td>2</td></tr>
+      <tr><td>Side cleat, 44 × 21 mm × 34 cm</td><td>4</td></tr>
+      <tr><td>Frame fixings 10 × 100 mm (back cleats)</td><td>10</td></tr>
+      <tr><td>Wood screws 5 × 70 mm (side cleats → battens)</td><td>4+</td></tr>
+      <tr><td>Heavy-duty spring-toggle anchors</td><td>4</td></tr>
+      <tr><td>Split hardwood collars, cork-lined (2 shelves + 1 rail)</td><td>3</td></tr>
+      <tr><td>Rail end sockets (wall) + rail sockets (collar)</td><td>2 + 2</td></tr>
+    </table>
+    <p class="sub" style="margin-top:10px">Load guide: fixed like this, each shelf comfortably takes a full run of folded clothes and boxes (30 kg or more). The weak link is the plasterboard, which is why the back cleat goes into the block.</p>
+  </aside>
+  <main>
+    <div id="viewport"></div>
+    <div class="hint">Drag to orbit · scroll to zoom · right-drag to pan · detail shown from 150 cm up</div>
+  </main>
+  <script type="module" src="src/fixing.js"></script>
+</body>
+</html>
